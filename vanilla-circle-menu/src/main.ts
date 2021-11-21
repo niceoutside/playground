@@ -1,6 +1,7 @@
 import { CoordinateTransformer } from "./CoordinateTransformer";
 import { Degree } from "./Degree";
 import { Drawer } from "./Drawer";
+import { MenuDrawer } from "./MenuDrawer";
 import { Point } from "./Point";
 
 function handleClick({ clientX, clientY }: MouseEvent) {
@@ -24,7 +25,17 @@ function handleClick({ clientX, clientY }: MouseEvent) {
   const newShit = CoordinateTransformer.forPoint(mega).toBrowser();
 
   const drawer = new Drawer();
-  drawer.drawPoint(newShit);
+  // drawer.drawPoint(newShit);
 }
 
-document.addEventListener("click", handleClick);
+document.addEventListener("DOMContentLoaded", () => {
+  setTimeout(() => {
+    console.log("DOMContentLoaded");
+    const tableElement = document.getElementById("table");
+    const rect = tableElement?.getBoundingClientRect();
+
+    if (!rect) throw Error("nix");
+
+    const drawer = new MenuDrawer(rect);
+  }, 250);
+});
